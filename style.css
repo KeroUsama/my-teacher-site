@@ -375,3 +375,27 @@ textarea:focus {
     border-radius: 10px;
     transition: width 0.6s ease;
 }
+/* ==========================================
+   زر إعادة التعيين
+   ========================================== */
+.reset-btn {
+    display: block;
+    margin: 0 auto 25px;
+    background: transparent;
+    color: #999;
+    border: 2px solid #E0DCD4;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reset-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: none;
+    box-shadow: none;
+}
