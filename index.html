@@ -11,80 +11,10 @@
     <div class="container">
         <h1>موقعي التعليمي 👋</h1>
         <button class="reset-btn" onclick="resetProgress()">🔄 إعادة تعيين التقدم</button>
-
-        <!-- شريط التقدم -->
-        <div class="progress-container">
-            <div class="progress-info">
-                <span>تقدمك في الدرس</span>
-                <span class="progress-text" id="progress-text">0%</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-        </div>
-
-        <!-- المهمة 1: الفيديو -->
-        <div class="task" id="task1">
-            <h2>المهمة 1: مشاهدة الفيديو التمهيدي</h2>
-            <p>اتفرج على الفيديو ده كويس عشان تفهم أساسيات الدرس.</p>
-
-            <div class="video-wrapper" id="video-wrapper-1" oncontextmenu="return false;">
-                <div class="video-overlay" id="video-overlay-1" onclick="playVideo('1', '-tCl_QkUTQ8')">
-                    <img src="https://img.youtube.com/vi/-tCl_QkUTQ8/maxresdefault.jpg" alt="الفيديو التمهيدي" class="video-poster">
-                    <div class="play-button">▶</div>
-                </div>
-                <div class="video-player hidden" id="video-player-1"></div>
-            </div>
-
-            <label class="confirm-box">
-                <input type="checkbox" id="watched" onchange="checkTask1()">
-                <span>شاهدت الفيديو بالكامل ✅</span>
-            </label>
-
-            <button id="btn1" onclick="completeTask(1)" disabled>أتممت المهمة ✅</button>
-        </div>
-
-        <!-- المهمة 2: الواجب -->
-        <div class="task locked" id="task2">
-            <h2>المهمة 2: حل الواجب الأول</h2>
-            <p>اكتب إجابتك على السؤال ده: <strong>اشرح بجملتين إيه اللي فهمته من الفيديو.</strong></p>
-
-            <textarea 
-                id="homework1" 
-                rows="5" 
-                placeholder="اكتب إجابتك هنا (20 حرف على الأقل)..."
-                oninput="checkTask2()"></textarea>
-
-            <div class="counter" id="counter1">0 / 20 حرف</div>
-
-            <button id="btn2" onclick="completeTask(2)" disabled>أتممت المهمة ✅</button>
-        </div>
-
-        <!-- المهمة 3: الاختيار -->
-        <div class="task locked" id="task3">
-            <h2>المهمة 3: اختبر نفسك</h2>
-            <p>اختار الإجابة الصحيحة:</p>
-
-            <div class="quiz">
-                <label>
-                    <input type="radio" name="q1" value="a" onchange="checkTask3()">
-                    You
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="b" onchange="checkTask3()">
-                    Me
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="c" onchange="checkTask3()">
-                    Both
-                </label>
-            </div>
-
-            <button id="btn3" onclick="completeTask(3)" disabled>أتممت المهمة ✅</button>
-        </div>
-
+        <div id="lessons-container"></div>
     </div>
 
+    <script src="lessons.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
