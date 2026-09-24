@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>موقعي التعليمي</title>
+    <title>Growth With Kero</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,24 +10,19 @@
     <div class="container">
         <h1>موقعي التعليمي 👋</h1>
 
-        <!-- ==========================================
-             المهمة 1
-             ========================================== -->
         <div class="task" id="task1">
             <h2>المهمة 1: مشاهدة الفيديو التمهيدي</h2>
             <p>اتفرج على الفيديو ده كويس عشان تفهم أساسيات الدرس.</p>
 
-            <!-- فيديو Google Drive -->
             <div class="video-box">
                 <iframe 
-                    src="https://drive.google.com/file/d/1W4zKNrGGEBdxlde2ZY1BGhTC3sPS-VY3/preview" 
+                    src="https://www.youtube.com/embed/lt_pQqHYZSY?rel=0" 
                     title="الفيديو التمهيدي"
-                    allow="autoplay"
-                     allowfullscreen>
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin">
                 </iframe>
             </div>
 
-            <!-- مربع تأكيد المشاهدة -->
             <label class="confirm-box">
                 <input type="checkbox" id="watched" onchange="checkTask1()">
                 <span>شاهدت الفيديو بالكامل ✅</span>
@@ -36,9 +31,6 @@
             <button id="btn1" onclick="completeTask(1)" disabled>أتممت المهمة ✅</button>
         </div>
 
-        <!-- ==========================================
-             المهمة 2
-             ========================================== -->
         <div class="task locked" id="task2">
             <h2>المهمة 2: حل الواجب الأول</h2>
             <p>اكتب إجابتك على السؤال ده: <strong>اشرح بجملتين إيه اللي فهمته من الفيديو.</strong></p>
@@ -49,15 +41,11 @@
                 placeholder="اكتب إجابتك هنا (20 حرف على الأقل)..."
                 oninput="checkTask2()"></textarea>
 
-            <!-- عدّاد الحروف -->
             <div class="counter" id="counter1">0 / 20 حرف</div>
 
             <button id="btn2" onclick="completeTask(2)" disabled>أتممت المهمة ✅</button>
         </div>
 
-        <!-- ==========================================
-             المهمة 3
-             ========================================== -->
         <div class="task locked" id="task3">
             <h2>المهمة 3: اختبر نفسك</h2>
             <p>اختار الإجابة الصحيحة:</p>
