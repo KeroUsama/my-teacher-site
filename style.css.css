@@ -1,0 +1,155 @@
+/* ==========================================
+   المتغيرات الأساسية - عشان تغير اللون من مكان واحد
+   ========================================== */
+:root {
+    --primary: #3B5B8C;        /* الأزرق الأساسي */
+    --success: #4A9D7E;        /* الأخضر للإنجاز */
+    --accent: #D4A24C;         /* الذهبي للتحفيز */
+    --bg: #F7F5F0;             /* خلفية الصفحة الكريمية */
+    --text: #5A5A5A;           /* النصوص الرمادية الدافئة */
+    --text-dark: #2C3E50;      /* عناوين داكنة */
+    --card-bg: #FFFFFF;        /* خلفية البطاقات */
+    --radius: 14px;            /* استدارة الحواف */
+    --shadow: 0 4px 20px rgba(59, 91, 140, 0.08); /* ظل ناعم جداً */
+}
+
+/* ==========================================
+   إعدادات عامة للصفحة
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+/* ==========================================
+   حاوية المحتوى الرئيسية
+   ========================================== */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: var(--text-dark);
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
+    letter-spacing: -0.5px;
+}
+
+/* خط صغير تحت العنوان بلون ذهبي */
+h1::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin: 15px auto 40px;
+}
+
+/* ==========================================
+   بطاقة المهمة
+   ========================================== */
+.task {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    border-right: 5px solid var(--primary); /* شريط جانبي مميز */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.task:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(59, 91, 140, 0.12);
+}
+
+.task h2 {
+    color: var(--primary);
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.task p {
+    margin-bottom: 18px;
+    font-size: 16px;
+}
+
+/* ==========================================
+   زر "أتممت المهمة"
+   ========================================== */
+button {
+    background-color: var(--success);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(74, 157, 126, 0.25);
+}
+
+button:hover {
+    background-color: #3E886B;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(74, 157, 126, 0.35);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* ==========================================
+   حالة المهمة المقفلة
+   ========================================== */
+.task.locked {
+    background: #F0EEE9;
+    border-right-color: var(--accent);
+    opacity: 0.85;
+    position: relative;
+    box-shadow: none;
+}
+
+.task.locked:hover {
+    transform: none;
+}
+
+.task.locked h2 {
+    color: #999;
+}
+
+.task.locked button {
+    display: none;
+}
+
+/* شارة "مقفلة" */
+.task.locked::before {
+    content: "🔒 مقفلة";
+    position: absolute;
+    top: 20px;
+    left: 24px;
+    background: var(--accent);
+    color: white;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(212, 162, 76, 0.3);
+}
