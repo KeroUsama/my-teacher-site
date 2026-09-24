@@ -59,6 +59,23 @@ h1::after {
 }
 
 /* ==========================================
+   الدرس وعنوانه
+   ========================================== */
+.lesson {
+    margin-bottom: 50px;
+}
+
+.lesson-title {
+    color: var(--text-dark);
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-right: 15px;
+    border-right: 5px solid var(--accent);
+    text-align: right;
+}
+
+/* ==========================================
    شريط التقدم
    ========================================== */
 .progress-container {
@@ -79,7 +96,7 @@ h1::after {
     color: var(--text-dark);
 }
 
-#progress-text {
+.progress-text {
     color: var(--success);
     font-size: 18px;
     font-weight: 700;
@@ -234,6 +251,33 @@ button:disabled:hover {
 }
 
 /* ==========================================
+   المهمة المكتملة
+   ========================================== */
+.task.completed {
+    opacity: 0.75;
+    border-right-color: var(--success);
+    background: #F0F9F5;
+}
+
+.task.completed:hover {
+    transform: none;
+}
+
+.task.completed h2 {
+    color: var(--success);
+}
+
+.task.completed h2::before {
+    content: "✅ ";
+}
+
+.task.completed button:disabled {
+    background-color: var(--success);
+    color: white;
+    opacity: 1;
+}
+
+/* ==========================================
    صندوق الفيديو
    ========================================== */
 .video-box {
@@ -384,6 +428,17 @@ textarea:focus {
         max-width: 100%;
     }
 
+    /* عنوان الدرس */
+    .lesson-title {
+        font-size: 20px;
+        margin-bottom: 15px;
+        padding-right: 12px;
+    }
+
+    .lesson {
+        margin-bottom: 35px;
+    }
+
     /* شريط التقدم */
     .progress-container {
         padding: 16px 18px;
@@ -394,7 +449,7 @@ textarea:focus {
         font-size: 14px;
     }
 
-    #progress-text {
+    .progress-text {
         font-size: 16px;
     }
 
@@ -440,7 +495,6 @@ textarea:focus {
     textarea {
         font-size: 14px;
         padding: 12px 14px;
-        rows: 4;
     }
 
     /* الاختيارات */
@@ -479,6 +533,10 @@ textarea:focus {
 
     h1 {
         font-size: 20px;
+    }
+
+    .lesson-title {
+        font-size: 18px;
     }
 
     .task {
