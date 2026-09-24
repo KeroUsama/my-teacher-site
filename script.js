@@ -9,6 +9,7 @@ window.onload = function() {
     renderAllLessons();
     restoreAllStates();
     updateAllProgress();
+    updateOverallProgress();
 };
 
 // ==========================================
@@ -20,10 +21,21 @@ function renderAllLessons() {
     
     var html = '';
     
-    lessonsData.forEach(function(lesson) {
-        html += '<div class="lesson" id="lesson-' + lesson.id + '">';
+    lessonsData.forEach(function(lesson, lessonIndex) {
+        // الدرس الأول مفتوح، الباقي مقفول لحد ما اللي قبله يخلص
+        var isLocked = lessonIndex > 0;
+        
+        html += '<div class="lesson' + (isLocked ? ' lesson-locked' : '') + '" id="lesson-' + lesson.id + '">';
         html += '<h2 class="lesson-title">' + lesson.title + '</h2>';
         
+        if (isLocked) {
+            html += '<div class="lesson-lock-overlay">';
+            html += '<div class="lock-icon">🔒</div>';
+            html += '<p>خلّص الدرس السابق عشان تفتح الدرس ده</p>';
+            html += '</div>';
+        }
+        
+        // شريط تقدم الدرس
         html += '<div class="progress-container">';
         html += '<div class="progress-info">';
         html += '<span>تقدمك في الدرس</span>';
@@ -34,6 +46,7 @@ function renderAllLessons() {
         html += '</div>';
         html += '</div>';
         
+        // المهام
         lesson.tasks.forEach(function(task, index) {
             html += renderTask(lesson.id, index, task);
         });
@@ -223,6 +236,10 @@ function completeTask(lessonId, taskNum) {
     
     unlockNextTask(lessonId, taskNum, lesson.tasks.length);
     updateLessonProgress(lessonId, lesson.tasks.length);
+    updateOverallProgress();
+    
+    // فتح الدرس التالي لو الدرس ده اكتمل
+    checkAndUnlockNextLesson(lessonId);
 }
 
 // ==========================================
@@ -264,6 +281,8 @@ function updateLessonProgress(lessonId, totalTasks) {
     var text = document.getElementById('progress-text-' + lessonId);
     if (fill) fill.style.width = percent + '%';
     if (text) text.textContent = percent + '%';
+    
+    return percent;
 }
 
 // ==========================================
@@ -276,10 +295,80 @@ function updateAllProgress() {
 }
 
 // ==========================================
+// حساب نسبة تقدم درس (بدون عرض)
+// ==========================================
+function getLessonProgress(lessonId, totalTasks) {
+    var done = 0;
+    for (var i = 1; i <= totalTasks; i++) {
+        if (localStorage.getItem('l' + lessonId + '-t' + i + '-done') === 'true') done++;
+    }
+    return Math.round((done / totalTasks) * 100);
+}
+
+// ==========================================
+// فتح الدرس التالي لو الحالي اكتمل
+// ==========================================
+function checkAndUnlockNextLesson(lessonId) {
+    var currentIndex = lessonsData.findIndex(function(l) { return l.id === lessonId; });
+    if (currentIndex === -1) return;
+    
+    var currentLesson = lessonsData[currentIndex];
+    var currentPercent = getLessonProgress(currentLesson.id, currentLesson.tasks.length);
+    
+    // لو الدرس اكتمل، افتح اللي بعده
+    if (currentPercent === 100 && currentIndex < lessonsData.length - 1) {
+        var nextLesson = lessonsData[currentIndex + 1];
+        var nextEl = document.getElementById('lesson-' + nextLesson.id);
+        if (nextEl) {
+            nextEl.classList.remove('lesson-locked');
+            var overlay = nextEl.querySelector('.lesson-lock-overlay');
+            if (overlay) overlay.remove();
+        }
+    }
+}
+
+// ==========================================
+// تحديث التقدم العام
+// ==========================================
+function updateOverallProgress() {
+    var totalTasks = 0;
+    var doneTasks = 0;
+    
+    lessonsData.forEach(function(lesson) {
+        lesson.tasks.forEach(function(task, index) {
+            totalTasks++;
+            var key = 'l' + lesson.id + '-t' + (index + 1);
+            if (localStorage.getItem(key + '-done') === 'true') doneTasks++;
+        });
+    });
+    
+    var percent = totalTasks === 0 ? 0 : Math.round((doneTasks / totalTasks) * 100);
+    
+    var fill = document.getElementById('overall-progress-fill');
+    var text = document.getElementById('overall-progress-text');
+    if (fill) fill.style.width = percent + '%';
+    if (text) text.textContent = percent + '%';
+}
+
+// ==========================================
 // استرجاع الحالة عند إعادة تحميل الصفحة
 // ==========================================
 function restoreAllStates() {
-    lessonsData.forEach(function(lesson) {
+    lessonsData.forEach(function(lesson, lessonIndex) {
+        // شوف لو الدرس ده مفروض يكون مفتوح
+        if (lessonIndex > 0) {
+            var prevLesson = lessonsData[lessonIndex - 1];
+            var prevPercent = getLessonProgress(prevLesson.id, prevLesson.tasks.length);
+            if (prevPercent === 100) {
+                var el = document.getElementById('lesson-' + lesson.id);
+                if (el) {
+                    el.classList.remove('lesson-locked');
+                    var overlay = el.querySelector('.lesson-lock-overlay');
+                    if (overlay) overlay.remove();
+                }
+            }
+        }
+        
         lesson.tasks.forEach(function(task, index) {
             var taskNum = index + 1;
             var key = 'l' + lesson.id + '-t' + taskNum;
