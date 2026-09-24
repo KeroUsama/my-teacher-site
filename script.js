@@ -96,12 +96,12 @@ function updateProgress() {
     if (localStorage.getItem('task1_done') === 'true') done++;
     if (localStorage.getItem('task2_done') === 'true') done++;
     if (localStorage.getItem('task3_done') === 'true') done++;
-    
+
     var percent = Math.round((done / 3) * 100);
-    
+
     var fill = document.getElementById('progress-fill');
     var text = document.getElementById('progress-text');
-    
+
     if (fill) fill.style.width = percent + '%';
     if (text) text.textContent = percent + '%';
 }
