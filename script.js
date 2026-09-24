@@ -30,13 +30,7 @@ function playVideo(key, videoId) {
         iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
         player.appendChild(iframe);
         
-        // 🔝 شريط حماية علوي (10% من الارتفاع)
-        var topShield = document.createElement('div');
-        topShield.className = 'video-top-shield';
-        topShield.onclick = function(e) { e.stopPropagation(); };
-        player.appendChild(topShield);
-        
-        // 🔽 شريط حماية سفلي (8% من الارتفاع)
+        // 🔽 شريط حماية سفلي (18% من الارتفاع)
         var bottomShield = document.createElement('div');
         bottomShield.className = 'video-bottom-shield';
         bottomShield.onclick = function(e) { e.stopPropagation(); };
