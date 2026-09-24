@@ -8,7 +8,7 @@ window.onload = function() {
 };
 
 // ==========================================
-// تشغيل الفيديو
+// تشغيل الفيديو مع حماية
 // ==========================================
 function playVideo(key, videoId) {
     var overlay = document.getElementById('video-overlay-' + key);
@@ -18,15 +18,29 @@ function playVideo(key, videoId) {
     
     if (player) {
         player.classList.remove('hidden');
+        player.innerHTML = '';
         
+        // إنشاء مشغل يوتيوب
         var iframe = document.createElement('iframe');
-        iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1&fs=1';
+        iframe.src = 'https://www.youtube.com/embed/' + videoId + 
+                     '?autoplay=1&rel=0&modestbranding=1&fs=1&showinfo=0&iv_load_policy=3&cc_load_policy=0';
         iframe.title = 'مشغل الفيديو';
         iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
         iframe.allowFullscreen = true;
         iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-        
         player.appendChild(iframe);
+        
+        // 🔝 شريط حماية علوي (10% من الارتفاع)
+        var topShield = document.createElement('div');
+        topShield.className = 'video-top-shield';
+        topShield.onclick = function(e) { e.stopPropagation(); };
+        player.appendChild(topShield);
+        
+        // 🔽 شريط حماية سفلي (8% من الارتفاع)
+        var bottomShield = document.createElement('div');
+        bottomShield.className = 'video-bottom-shield';
+        bottomShield.onclick = function(e) { e.stopPropagation(); };
+        player.appendChild(bottomShield);
     }
 }
 
