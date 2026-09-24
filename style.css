@@ -505,3 +505,62 @@ textarea:focus {
     button { font-size: 14px; padding: 10px 18px; }
     .reset-btn { font-size: 12px; padding: 6px 12px; }
 }
+/* ==========================================
+   شريط التقدم العام
+   ========================================== */
+.overall-progress {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F7F5F0 100%);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    margin-bottom: 40px;
+    box-shadow: 0 6px 24px rgba(59, 91, 140, 0.12);
+    border-right: 5px solid var(--accent);
+}
+
+.overall-progress .progress-info {
+    font-size: 16px;
+}
+
+.overall-progress .progress-text {
+    font-size: 20px;
+}
+
+.overall-progress .progress-bar {
+    height: 12px;
+}
+
+/* ==========================================
+   الدرس المقفول
+   ========================================== */
+.lesson-locked {
+    position: relative;
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}
+
+.lesson-locked .lesson-title {
+    color: #999;
+}
+
+.lesson-lock-overlay {
+    background: #F0EEE9;
+    border-radius: var(--radius);
+    padding: 40px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 2px dashed var(--accent);
+}
+
+.lesson-lock-overlay .lock-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.lesson-lock-overlay p {
+    color: #999;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0;
+}
