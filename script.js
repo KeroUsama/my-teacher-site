@@ -114,3 +114,34 @@ function resetProgress() {
         location.reload();
     }
 }
+const lessonsData = [
+    {
+        id: 1,
+        title: "الدرس الأول: الأساسيات",
+        tasks: [
+            {
+                type: "video",
+                title: "مشاهدة الفيديو التمهيدي",
+                description: "اتفرج على الفيديو ده كويس عشان تفهم أساسيات الدرس.",
+                videoId: "lt_pQqHYZSY"
+            },
+            {
+                type: "homework",
+                title: "حل الواجب الأول",
+                question: "اشرح بجملتين إيه اللي فهمته من الفيديو.",
+                minChars: 20
+            },
+            {
+                type: "quiz",
+                title: "اختبر نفسك",
+                question: "اختار الإجابة الصحيحة:",
+                options: [
+                    { value: "a", text: "You" },
+                    { value: "b", text: "Me" },
+                    { value: "c", text: "Both" }
+                ]
+            }
+        ]
+    }
+    // 💡 عشان تضيف درس تاني، انسخ اللي فوق وحط فاصلة (,) وعدّل البيانات
+];
