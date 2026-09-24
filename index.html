@@ -11,6 +11,18 @@
     <div class="container">
         <h1>موقعي التعليمي 👋</h1>
         <button class="reset-btn" onclick="resetProgress()">🔄 إعادة تعيين التقدم</button>
+
+        <!-- شريط التقدم العام -->
+        <div class="overall-progress">
+            <div class="progress-info">
+                <span>📊 تقدمك الكلي في المنهج</span>
+                <span class="progress-text" id="overall-progress-text">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="overall-progress-fill"></div>
+            </div>
+        </div>
+
         <div id="lessons-container"></div>
     </div>
 
