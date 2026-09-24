@@ -105,3 +105,12 @@ function updateProgress() {
     if (fill) fill.style.width = percent + '%';
     if (text) text.textContent = percent + '%';
 }
+// ==========================================
+// إعادة تعيين التقدم
+// ==========================================
+function resetProgress() {
+    if (confirm('هل أنت متأكد؟ سيتم مسح كل تقدمك والبدء من الأول.')) {
+        localStorage.clear();
+        location.reload();
+    }
+}
