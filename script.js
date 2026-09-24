@@ -2,6 +2,10 @@
 // عند فتح الصفحة
 // ==========================================
 window.onload = function() {
+    if (typeof lessonsData === 'undefined' || !lessonsData.length) {
+        console.error('❌ lessonsData مش موجود أو فاضي');
+        return;
+    }
     renderAllLessons();
     restoreAllStates();
     updateAllProgress();
@@ -12,6 +16,8 @@ window.onload = function() {
 // ==========================================
 function renderAllLessons() {
     var container = document.getElementById('lessons-container');
+    if (!container) return;
+    
     var html = '';
     
     lessonsData.forEach(function(lesson) {
@@ -96,8 +102,12 @@ function renderTask(lessonId, taskIndex, task) {
 // التحقق: الفيديو
 // ==========================================
 function checkVideo(key) {
-    var checked = document.getElementById(key + '-watched').checked;
-    document.getElementById(key + '-btn').disabled = !checked;
+    var el = document.getElementById(key + '-watched');
+    var btn = document.getElementById(key + '-btn');
+    if (!el || !btn) return;
+    
+    var checked = el.checked;
+    btn.disabled = !checked;
     localStorage.setItem(key + '-watched', checked);
 }
 
@@ -105,17 +115,21 @@ function checkVideo(key) {
 // التحقق: الواجب
 // ==========================================
 function checkHomework(key, minChars) {
-    var text = document.getElementById(key + '-text').value;
+    var textEl = document.getElementById(key + '-text');
     var counter = document.getElementById(key + '-counter');
+    var btn = document.getElementById(key + '-btn');
+    if (!textEl || !counter || !btn) return;
+    
+    var text = textEl.value;
     counter.textContent = text.length + ' / ' + minChars + ' حرف';
     localStorage.setItem(key + '-text', text);
     
     if (text.length >= minChars) {
         counter.classList.add('done');
-        document.getElementById(key + '-btn').disabled = false;
+        btn.disabled = false;
     } else {
         counter.classList.remove('done');
-        document.getElementById(key + '-btn').disabled = true;
+        btn.disabled = true;
     }
 }
 
@@ -123,8 +137,11 @@ function checkHomework(key, minChars) {
 // التحقق: الاختيار
 // ==========================================
 function checkQuiz(key) {
+    var btn = document.getElementById(key + '-btn');
+    if (!btn) return;
+    
     var selected = document.querySelector('input[name="' + key + '-q"]:checked');
-    document.getElementById(key + '-btn').disabled = !selected;
+    btn.disabled = !selected;
     if (selected) {
         localStorage.setItem(key + '-answer', selected.value);
     }
@@ -135,12 +152,37 @@ function checkQuiz(key) {
 // ==========================================
 function completeTask(lessonId, taskNum) {
     var key = 'l' + lessonId + '-t' + taskNum;
+    
+    // لو المهمة مكتملة قبل كده، متعملش حاجة
+    if (localStorage.getItem(key + '-done') === 'true') {
+        return;
+    }
+    
     localStorage.setItem(key + '-done', 'true');
     alert('أحسنت! لقد أتممت المهمة ' + taskNum + ' 🎉');
     
+    // علّم المهمة كمكتملة
+    markTaskDone(key);
+    
     var lesson = lessonsData.find(function(l) { return l.id === lessonId; });
+    if (!lesson) return;
+    
     unlockNextTask(lessonId, taskNum, lesson.tasks.length);
     updateLessonProgress(lessonId, lesson.tasks.length);
+}
+
+// ==========================================
+// علّم المهمة كمكتملة
+// ==========================================
+function markTaskDone(key) {
+    var task = document.getElementById('task-' + key);
+    var btn = document.getElementById(key + '-btn');
+    
+    if (task) task.classList.add('completed');
+    if (btn) {
+        btn.disabled = true;
+        btn.textContent = '✅ تمت المهمة';
+    }
 }
 
 // ==========================================
@@ -187,10 +229,13 @@ function restoreAllStates() {
         lesson.tasks.forEach(function(task, index) {
             var taskNum = index + 1;
             var key = 'l' + lesson.id + '-t' + taskNum;
+            var isDone = localStorage.getItem(key + '-done') === 'true';
             
-            // فتح المهام المكتملة
-            if (localStorage.getItem(key + '-done') === 'true') {
+            // لو المهمة مكتملة
+            if (isDone) {
+                markTaskDone(key);
                 unlockNextTask(lesson.id, taskNum, lesson.tasks.length);
+                return; // متكملش، خلاص المهمة تمت
             }
             
             // استرجاع حالة الفيديو
