@@ -59,23 +59,6 @@ h1::after {
 }
 
 /* ==========================================
-   الدرس وعنوانه
-   ========================================== */
-.lesson {
-    margin-bottom: 50px;
-}
-
-.lesson-title {
-    color: var(--text-dark);
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    padding-right: 15px;
-    border-right: 5px solid var(--accent);
-    text-align: right;
-}
-
-/* ==========================================
    شريط التقدم
    ========================================== */
 .progress-container {
@@ -251,46 +234,74 @@ button:disabled:hover {
 }
 
 /* ==========================================
-   المهمة المكتملة
+   واجهة الفيديو المخصصة
    ========================================== */
-.task.completed {
-    opacity: 0.75;
-    border-right-color: var(--success);
-    background: #F0F9F5;
-}
-
-.task.completed:hover {
-    transform: none;
-}
-
-.task.completed h2 {
-    color: var(--success);
-}
-
-.task.completed h2::before {
-    content: "✅ ";
-}
-
-.task.completed button:disabled {
-    background-color: var(--success);
-    color: white;
-    opacity: 1;
-}
-
-/* ==========================================
-   صندوق الفيديو
-   ========================================== */
-.video-box {
+.video-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%;
     margin: 20px 0;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #000;
 }
 
-.video-box iframe {
+.video-overlay {
+    position: relative;
+    cursor: pointer;
+    display: block;
+    line-height: 0;
+}
+
+.video-poster {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+.video-overlay:hover .video-poster {
+    opacity: 0.8;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    padding-right: 6px;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.video-overlay:hover .play-button {
+    background: var(--success);
+    border-color: white;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.video-player {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+}
+
+.video-player.hidden {
+    display: none;
+}
+
+.video-player iframe {
     position: absolute;
     top: 0;
     left: 0;
@@ -428,18 +439,6 @@ textarea:focus {
         max-width: 100%;
     }
 
-    /* عنوان الدرس */
-    .lesson-title {
-        font-size: 20px;
-        margin-bottom: 15px;
-        padding-right: 12px;
-    }
-
-    .lesson {
-        margin-bottom: 35px;
-    }
-
-    /* شريط التقدم */
     .progress-container {
         padding: 16px 18px;
         margin-bottom: 20px;
@@ -453,14 +452,12 @@ textarea:focus {
         font-size: 16px;
     }
 
-    /* زر إعادة التعيين */
     .reset-btn {
         padding: 7px 16px;
         font-size: 13px;
         margin-bottom: 18px;
     }
 
-    /* بطاقة المهمة */
     .task {
         padding: 20px 18px;
         margin-bottom: 16px;
@@ -476,14 +473,12 @@ textarea:focus {
         margin-bottom: 14px;
     }
 
-    /* الأزرار */
     button {
         padding: 11px 22px;
         font-size: 15px;
         width: 100%;
     }
 
-    /* شارة "مقفلة" */
     .task.locked::before {
         top: 12px;
         left: 14px;
@@ -491,13 +486,11 @@ textarea:focus {
         padding: 4px 10px;
     }
 
-    /* خانة الواجب */
     textarea {
         font-size: 14px;
         padding: 12px 14px;
     }
 
-    /* الاختيارات */
     .quiz label {
         padding: 12px 14px;
         font-size: 14px;
@@ -509,7 +502,6 @@ textarea:focus {
         height: 16px;
     }
 
-    /* مربع تأكيد المشاهدة */
     .confirm-box {
         padding: 14px 16px;
         font-size: 14px;
@@ -524,6 +516,12 @@ textarea:focus {
     .counter {
         font-size: 12px;
     }
+
+    .play-button {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+    }
 }
 
 /* ==========================================
@@ -533,10 +531,6 @@ textarea:focus {
 
     h1 {
         font-size: 20px;
-    }
-
-    .lesson-title {
-        font-size: 18px;
     }
 
     .task {
